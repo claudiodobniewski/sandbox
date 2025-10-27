@@ -10,7 +10,7 @@ pygame.init()
 WIDTH = 600
 HEIGHT = 480
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Esquiva Fatal")
+pygame.display.set_caption("Esquivar cosas")
 
 # Colores (RGB)
 WHITE = (255, 255, 255)
@@ -25,7 +25,7 @@ small_font = pygame.font.Font(None, 36)
 # --- 3. Variables del Juego ---
 FPS = 60
 clock = pygame.time.Clock()
-game_over = False
+game_over = True
 score = 0
 
 # --- 4. Configuración del Jugador (El Alma) ---
@@ -122,7 +122,7 @@ while True:
         if game_over and event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
             reset_game()
 
-    if not game_over:
+    if game_over:
         
         # 7.2 Lógica del Movimiento del Jugador
         keys = pygame.key.get_pressed()
