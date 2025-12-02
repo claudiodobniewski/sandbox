@@ -42,8 +42,6 @@ jobs:
         # --name: Nombre del ejecutable final.
         python -m PyInstaller --onefile --name **sandbox** main.py
     
-    - name: Upload Executable as Artifact
-      uses: actions/upload-artifact@v4 # <--- ¡Cambiamos a V4!
-      with:
-        name: sandbox-${{ matrix.os }}-${{ matrix.python-version }}
-        path: dist/
+    - name: Build Executable with PyInstaller
+      run: |
+        python -m PyInstaller --onefile --name sandbox main.py
