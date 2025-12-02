@@ -43,9 +43,7 @@ jobs:
         python -m PyInstaller --onefile --name **sandbox** main.py
     
     - name: Upload Executable as Artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4 # <--- ¡Cambiamos a V4!
       with:
-        # El directorio 'dist/' es donde PyInstaller guarda el ejecutable.
-        # El nombre del artefacto será único para la plataforma.
         name: sandbox-${{ matrix.os }}-${{ matrix.python-version }}
         path: dist/
