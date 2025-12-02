@@ -1,0 +1,51 @@
+name: CI Python
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.8", "3.9"]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Install dependencies and PyInstaller
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        # Instalar PyInstaller para empaquetar
+        pip install pyinstaller
+
+    - name: Run linters and tests
+      run: |
+        # Comando para linters y tests
+        # (ejemplo: pytest)
+        # Aquí puedes añadir tus comandos de prueba y linting
+        echo "Ejecutando tests..."
+
+    - name: Build Executable with PyInstaller
+      run: |
+        # Usamos main.py como el archivo principal de entrada
+        # --onefile: Crea un único archivo ejecutable.
+        # --name: Nombre del ejecutable final.
+        python -m PyInstaller --onefile --name **sandbox** main.py
+    
+    - name: Upload Executable as Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        # El directorio 'dist/' es donde PyInstaller guarda el ejecutable.
+        # El nombre del artefacto será único para la plataforma.
+        name: sandbox-${{ matrix.os }}-${{ matrix.python-version }}
+        path: dist/

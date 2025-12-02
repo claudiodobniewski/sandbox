@@ -1,0 +1,4 @@
+thinker
+colorama
+keyboard
+pygame
