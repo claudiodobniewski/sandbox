@@ -37,11 +37,13 @@ jobs:
 
     - name: Build Executable with PyInstaller
       run: |
-        # Usamos main.py como el archivo principal de entrada
-        # --onefile: Crea un único archivo ejecutable.
-        # --name: Nombre del ejecutable final.
-        python -m PyInstaller --onefile --name **sandbox** main.py
-    
-    - name: Build Executable with PyInstaller
-      run: |
         python -m PyInstaller --onefile --name sandbox main.py
+    
+    - name: Upload Executable as Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        # El nombre del artefacto está bien, no hay asteriscos.
+        name: sandbox-${{ matrix.os }}-${{ matrix.python-version }}
+        # ¡IMPORTANTE! La ruta al ejecutable, que es el directorio de salida de PyInstaller.
+        # Debe ser solo 'dist/' sin comillas ni caracteres especiales como asteriscos.
+        path: dist/
